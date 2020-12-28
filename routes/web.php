@@ -25,3 +25,8 @@ Auth::routes();
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::get('/admin', [Admin::class, 'index']);
+
+Route::get('/admin/exam_category', [Admin::class, 'exam_category']);
+
+Route::post('/admin/add_category', [Admin::class, 'add_category']);
+
