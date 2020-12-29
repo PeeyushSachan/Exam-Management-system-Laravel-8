@@ -72,12 +72,18 @@
                       <td>{{$data->id}}</td>
                       <td>{{$data->name}}
                       </td>
-                      <td>{{$data->status}}</td>
+                      <td>  @if($data->status=="1")
+                      <img src="/assets/svg/check.svg" class="img-fluid" />
+                        @else
+                        <img  src="/assets/svg/cross.svg" class="img-fluid" />
+                        @endif
+                      
+                      </td>
                       <td>{{$data->created_at}}</td>
                       <td>
                         
                         <div class="btn-group">
-                          <button type="button" class="btn btn-warning"   name="edit-btn" title="edit btn">
+                          <button type="button" class="btn btn-warning"  onclick="edit_Rec( name='{{$data->name}}',status='{{$data->status}}',id='{{$data->id}}')"   data-toggle="modal" data-target="#modal-Edit"  name="edit-btn" title="edit btn" >
                             <img src="/assets/svg/edit-btn.svg"  class="img-fluid"/></button>
 
                             <button type="button" class="btn btn-danger" name="delete-btn" title="delete btn">
@@ -85,6 +91,17 @@
                       </div>
                     </td>
                     </tr>
+    
+
+
+                   
+     
+
+
+
+
+
+
 
                     @endforeach
                     
@@ -143,12 +160,26 @@
             
            </div>
 
+           <div class="form-group">
+            <div class="col-auto">    
+       <label >status</label>
+            <br/>
+      <input type="radio"  name="status_name"  value="1" required>      
+       <label>Active</label>
+  
+        <br/>
+
+  
+   <input type="radio"   name="status_name"  value="0" >
+   <label>Inactive</label> 
+     
+   </div>
+      
+     </div>
+
+
             </div>
 
-            
-
-
-          
             <div class="modal-footer justify-content-between">
               <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
               <button type="submit" class="btn btn-success">Save changes</button>
@@ -161,10 +192,107 @@
       </div>
 
 
+
+
+     
+
+
+
+      <div class="modal fade" id="modal-Edit">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+             
+              
+              <h4 class="modal-title">Update records</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form  action="" method="post" id="edit_action">
+                  @csrf
+                <div class="form-group">
+                  <div class="col-auto">    
+             <label >Category Name</label>
+              <div class="input-group mb-2">
+                 <div class="input-group-prepend">
+                   <div class="input-group-text"><i class="fas fa-list-alt"></i></div>
+                 </div>      
+             
+         <input type="text" class="form-control" id="edit_name"  placeholder="Enter Category Name"  name="category_name" value={{$data->name}}  maxlength="20" required>
+            
+           </div>
+         </div>
+            
+           </div>
+
+           <div class="form-group">
+            <div class="col-auto">    
+       <label >status</label>
+            <br/>
+      <input type="radio"  name="status_name"  value="1"  id="v1_t" required>      
+       <label>Active</label>
+  
+        <br/>
+
+  
+   <input type="radio"   name="status_name" id="v2_f" value="0" >
+   <label>Inactive</label> 
+     
+   </div>
+      
+     </div>
+
+
+            </div>
+
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-success">Save changes</button>
+            </div>
+          </form>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+
+
+
+
+
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
   
+<script>
+function edit_Rec(name,status,id)
+{
+
+
+document.getElementById("edit_name").value=name;
+
+document.getElementById("edit_action").action= "../admin/edit_category/"+id;
+ 
+if(status==1)
+{
+ console.log("true");
+document.getElementById("v1_t").checked=true;
+
+
+}
+else
+{
+  console.log("false");
+  document.getElementById("v2_f").checked=true;
+}
+                    
+
+}
+
+
+</script>
 
 
 

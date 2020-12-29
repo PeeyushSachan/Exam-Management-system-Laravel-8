@@ -30,3 +30,7 @@ Route::get('/admin/exam_category', [Admin::class, 'exam_category']);
 
 Route::post('/admin/add_category', [Admin::class, 'add_category']);
 
+Route::post('/admin/edit_category/{id}', [Admin::class, 'edit_category']);
+
+
+

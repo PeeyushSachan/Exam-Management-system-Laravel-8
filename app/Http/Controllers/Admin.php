@@ -33,7 +33,7 @@ class Admin extends Controller
     {
           $category= new ems_category;
           $category->name=$req->category_name;
-          $category->status=1;
+          $category->status=$req->status_name;
           $category->save();
      $arr=array("status"=>"false","massage"=>"success","reload"=>url('admin/exam_category'));
 
@@ -48,4 +48,19 @@ class Admin extends Controller
    }
 
   
+
+
+   public function edit_category($id,Request $req)
+   {
+  /*return DB::table('ems_categories')
+  ->where('id',$id)
+  ->get();*/
+  $category= ems_category::where('id',$id)->first();
+
+  $category->name=$req->category_name;
+  $category->status=$req->status_name;
+  $category->update();
+
+  return redirect()->back();
+   }
 }
