@@ -75,10 +75,20 @@
         -->
 
           <li class="nav-item">
-            <a href="/admin/manage_exam.php" class="nav-link">
+            <a href="/admin/manage_exam" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Exam
+                
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="/admin/manage_student" class="nav-link">
+              <i class="nav-icon fas fa-user"></i>
+              <p>
+                Student
                 
               </p>
             </a>

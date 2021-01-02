@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\ems_category;
 use App\Models\ems_exam_master;
+use App\Models\ems_student;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\DB;
@@ -16,11 +17,6 @@ class Admin extends Controller
       alert()->success('Success',$massage )->persistent('Close')->autoclose(3500);
       
       
-   }
-   public function sweet_alert_warning($massage)
-   {
-
-   alert()->warning('Warning Message', $massage)->confirmButton('ok')->cancelButton('cancel');
    }
    public function index()
    {
@@ -182,6 +178,15 @@ class Admin extends Controller
 
     }
 
+
+
+
+    public function manage_student()
+    { 
+
+       $data=DB::table('ems_students')->get();
+      return view('admin.manage_student' ,["datas"=>$data]);
+    }
 
 
 }
