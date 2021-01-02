@@ -24,12 +24,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Category</h1>
+            <h1 class="m-0 text-dark">Exam</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="/admin">Home</a></li>
-              <li class="breadcrumb-item active">Category</li>
+              <li class="breadcrumb-item active">Exam</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -61,34 +61,41 @@
                   <table id="example1" class="table table-bordered table-striped">
                     <thead>
                     <tr>
-                      <th>Id</th>
-                      <th>Categories</th>
-                      <th>Status</th>
-                      <th>Created_at</th>
-                      <th>Action</th>
+                        <th>Id</th>
+                        <th>Categories</th>
+                        <th>tittle</th>
+                        <th>Status</th>
+                        <th>exam_date</th>
+                        <th>Action</th>
                     </tr>
                     </thead>
                     <tbody>
                    @foreach($datas as $data)
-
+                   
                     <tr>
                       <td>{{$data->id}}</td>
-                      <td>{{$data->name}}
+                      <td>{{$data->category}}
                       </td>
-                      <td>  @if($data->status=="1")
-                      <img src="/assets/svg/check.svg" class="img-fluid" />
-                        @else
-                        <img  src="/assets/svg/cross.svg" class="img-fluid" />
-                        @endif
+                      <td>{{$data->tittle}}
+                    </td>
+
+
+                      <td> 
+
+                        @if($data->status && $data->cat_status =="1")
+                        <img src="/assets/svg/check.svg" class="img-fluid" />
+                          @else
+                          <img  src="/assets/svg/cross.svg" class="img-fluid" />
+                          @endif
                       
                       </td>
-                      <td>{{$data->created_at}}</td>
+                      <td>{{$data->exam_date}}</td>
                       <td>
                         
                         <div class="btn-group">
-                          <button type="button" class="btn btn-warning"  onclick="edit_Rec( name='{{$data->name}}',status='{{$data->status}}',id='{{$data->id}}')"   data-toggle="modal" data-target="#modal-Edit"  name="edit-btn" title="edit btn" >
+                          <button type="button" class="btn btn-warning"  onclick="edit_Rec( name='{{$data->tittle}}',status='{{$data->status}}',id='{{$data->id}}',date='{{$data->exam_date}}',category='{{$data->category}}')"   data-toggle="modal" data-target="#modal-edit"  name="edit-btn" title="edit btn" >
                             <img src="/assets/svg/edit-btn.svg"  class="img-fluid"/></button>
-                                 <form  action="../admin/delete_category/{{$data->id}}" method="post"  onsubmit="return del_Rec()">
+                                 <form  action="/admin/delete_exam/{{$data->id}}" method="post"  onsubmit="return del_Rec()">
                                   {{ method_field('delete') }}
                                   @csrf
                                   <button type="submit" class="btn btn-danger"    title="delete btn">
@@ -115,10 +122,13 @@
                     </tbody>
                     <tfoot>
                     <tr>
+
+                        	
                       <th>Id</th>
                       <th>Categories</th>
+                      <th>tittle</th>
                       <th>Status</th>
-                      <th>Created_at</th>
+                      <th>exam_date</th>
                       <th>Action</th>
                     </tr>
                     </tfoot>
@@ -137,7 +147,6 @@
       <!-- /.content -->
       
 
-
       <div class="modal fade" id="modal-default">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -149,36 +158,52 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
+
+
             <div class="modal-body">
-              <form  action="../admin/add_category" method="post" class="db_operation">
-                  @csrf
-                <div class="form-group">
-                  <div class="col-auto">    
-             <label >Category Name</label>
-              <div class="input-group mb-2">
-                 <div class="input-group-prepend">
-                   <div class="input-group-text"><i class="fas fa-list-alt"></i></div>
-                 </div>      
-             
-         <input type="text" class="form-control"   placeholder="Enter Category Name"  name="category_name"   maxlength="20" required>
-            
-           </div>
+              <form  action="/admin/add_manage_exam" method="post" >
+               @csrf
+
+               <div class="form-group">
+                <div class="col-auto">    
+           <label >tittle Name</label>
+            <div class="input-group mb-2">
+               <div class="input-group-prepend">
+                 <div class="input-group-text"><i class="fas fa-list-alt"></i></div>
+               </div>      
+       <input type="text" class="form-control"   placeholder="Enter Category Name"  name="tittle"   required>
+          
          </div>
-            
+       </div> 
+         </div>
+
+            <div class="form-group">
+             <div class="col-auto">    
+            <label >Exam date Name</label>
+            <div class="input-group mb-2">
+            <div class="input-group-prepend">
+            <div class="input-group-text"><i class="fa fa-calendar" aria-hidden="true"></i></div>
+            </div>      
+           <input type="date" class="form-control"   placeholder="Enter Exam date Name"  name="Exam date_name"   maxlength="20" required>
+             </div>
            </div>
+             </div>
+
+               
 
            <div class="form-group">
             <div class="col-auto">    
-       <label >status</label>
-            <br/>
-      <input type="radio"  name="status_name"  value="1" required>      
-       <label>Active</label>
+       <label >Select Category</label>
+       <select class="form-control"  name="category" required>
+        <option disabled selected value> -- select an option -- </option>
+            @foreach($cd_datas as $cd_data )
+            
+ 
+        <option value="{{$cd_data->id}}">{{$cd_data->name}}</option>
+             @endforeach
   
-        <br/>
-
   
-   <input type="radio"   name="status_name"  value="0" >
-   <label>Inactive</label> 
+</select>
      
    </div>
       
@@ -201,56 +226,88 @@
 
 
 
-     
 
 
-
-      <div class="modal fade" id="modal-Edit">
+      <div class="modal fade" id="modal-edit">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
              
               
-              <h4 class="modal-title">Update records</h4>
+              <h4 class="modal-title">Add New record</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
+
+
             <div class="modal-body">
-              <form  action="" method="post" id="edit_action">
-                  @csrf
-                <div class="form-group">
-                  <div class="col-auto">    
-             <label >Category Name</label>
-              <div class="input-group mb-2">
-                 <div class="input-group-prepend">
-                   <div class="input-group-text"><i class="fas fa-list-alt"></i></div>
-                 </div>      
-             
-         <input type="text" class="form-control" id="edit_name"  placeholder="Enter Category Name"  name="category_name"   maxlength="20" required>
-            
-           </div>
+              <form  action="" id="edit_action" method="post" >
+               @csrf
+
+               <div class="form-group">
+                <div class="col-auto">    
+           <label >tittle Name</label>
+            <div class="input-group mb-2">
+               <div class="input-group-prepend">
+                 <div class="input-group-text"><i class="fas fa-list-alt"></i></div>
+               </div>      
+       <input type="text"  id="edit_name" class="form-control"   placeholder="Enter Category Name"  name="tittle"   required>
+          
          </div>
-            
+       </div> 
+         </div>
+
+            <div class="form-group">
+             <div class="col-auto">    
+            <label >Exam date </label>
+            <div class="input-group mb-2">
+            <div class="input-group-prepend">
+            <div class="input-group-text"><i class="fa fa-calendar" aria-hidden="true"></i></div>
+            </div>      
+           <input type="date" id="edit_date" class="form-control"   placeholder="Enter Exam date Name"  name="date_name"   maxlength="20" required>
+             </div>
            </div>
+             </div>
+
+               
 
            <div class="form-group">
             <div class="col-auto">    
-       <label >status</label>
-            <br/>
-      <input type="radio"  name="status_name"  value="1"  id="v1_t" required>      
-       <label>Active</label>
+       <label >Select Category</label>
+       <select  id="edit_category" class="form-control"  name="category" required>
+        <option disabled selected value> -- select an option -- </option>
+            @foreach($cd_datas as $cd_data )
+            
+ 
+        <option value="{{$cd_data->id}}">{{$cd_data->name}}</option>
+             @endforeach
   
-        <br/>
-
   
-   <input type="radio"   name="status_name" id="v2_f" value="0" >
-   <label>Inactive</label> 
+</select>
      
    </div>
       
      </div>
 
+
+
+     <div class="form-group">
+            <div class="col-auto">    
+       <label >status</label>
+            <br/>
+      <input type="radio"  name="status"  value="1"  id="v1_t" required>      
+       <label>Active</label>
+  
+        <br/>
+
+  
+   <input type="radio"   name="status" id="v2_f" value="0" >
+   <label>Inactive</label> 
+     
+   </div>
+      
+     </div>
 
             </div>
 
@@ -265,22 +322,20 @@
         <!-- /.modal-dialog -->
       </div>
 
-
-
-
-
-    <!-- /.content -->
   </div>
-  <!-- /.content-wrapper -->
+     
   
 <script>
-function edit_Rec(name,status,id)
+
+function edit_Rec(name,status,id,date,category)
 {
 
 
 document.getElementById("edit_name").value=name;
+document.getElementById("edit_date").value=date;
+document.getElementById("edit_category").value=category;
 
-document.getElementById("edit_action").action= "../admin/edit_category/"+id;
+document.getElementById("edit_action").action= "/admin/edit_exam/"+id;
  
 if(status==1)
 {
@@ -294,10 +349,9 @@ else
   console.log("false");
   document.getElementById("v2_f").checked=true;
 }
-                    
+                   
 
 }
-
 
 
 

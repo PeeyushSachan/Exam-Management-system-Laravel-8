@@ -9,7 +9,7 @@ class ems_exam_master extends Model
 {
     use HasFactory;
 
-    protected $table="ems_exam_master";
+    protected $table="ems_exam_masters";
     protected $primaryKey="id";
     protected $fillable=['tittle','status'];
 }
