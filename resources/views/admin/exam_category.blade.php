@@ -86,7 +86,7 @@
                       <td>
                         
                         <div class="btn-group">
-                          <button type="button" class="btn btn-warning"  onclick="edit_Rec( name='{{$data->name}}',status='{{$data->status}}',id='{{$data->id}}')"   data-toggle="modal" data-target="#modal-Edit"  name="edit-btn" title="edit btn" >
+                          <button type="button" class="btn btn-warning"  onclick="edit_Rec( {{json_encode($data)}}  )"   data-toggle="modal" data-target="#modal-Edit"  name="edit-btn" title="edit btn" >
                             <img src="/assets/svg/edit-btn.svg"  class="img-fluid"/></button>
                                  <form  action="../admin/delete_category/{{$data->id}}" method="post"  onsubmit="return del_Rec()">
                                   {{ method_field('delete') }}
@@ -274,15 +274,17 @@
   <!-- /.content-wrapper -->
   
 <script>
-function edit_Rec(name,status,id)
+function edit_Rec(data)
 {
 
+  //alert(data['name']);
+  //name,status,id
 
-document.getElementById("edit_name").value=name;
+document.getElementById("edit_name").value=data['name'];
 
-document.getElementById("edit_action").action= "../admin/edit_category/"+id;
+document.getElementById("edit_action").action= "../admin/edit_category/"+data['id'];
  
-if(status==1)
+if(data['status']==1)
 {
  console.log("true");
 document.getElementById("v1_t").checked=true;
@@ -294,7 +296,7 @@ else
   console.log("false");
   document.getElementById("v2_f").checked=true;
 }
-                    
+                  
 
 }
 

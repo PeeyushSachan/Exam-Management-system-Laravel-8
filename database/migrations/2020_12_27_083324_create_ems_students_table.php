@@ -19,7 +19,7 @@ class CreateEmsStudentsTable extends Migration
             $table->string('email')->nullable();
             $table->string('mobile')->nullable();
             
-            $table->string('category')->nullable();
+            $table->string('dob')->nullable();
             $table->string('exam')->nullable();
             $table->string('password')->nullable();
             $table->string('status')->nullable();

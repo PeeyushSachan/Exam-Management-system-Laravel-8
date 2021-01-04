@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use App\Models\ems_category;
 use App\Models\ems_exam_master;
 use App\Models\ems_student;
+use App\Models\ems_portal;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\DB;
@@ -86,8 +87,9 @@ class Admin extends Controller
       {
        $massage='Record deleted';
          $this->sweet_alert_success($massage);
+         return redirect()->back();
        }
-       return redirect()->back();
+      
      
 
     }
@@ -183,10 +185,140 @@ class Admin extends Controller
 
     public function manage_student()
     { 
-
+       $manage_exam_data=ems_exam_master::where('status','1')->get(); 
        $data=DB::table('ems_students')->get();
-      return view('admin.manage_student' ,["datas"=>$data]);
+      return view('admin.manage_student' ,["datas"=>$data,"manage_exam_datas"=>$manage_exam_data]);
     }
 
 
+  public function add_manage_student(request $req)
+  {
+
+
+    $req->input();
+    $student=new ems_student;
+     $student->name=$req->name;
+     $student->email=$req->email;
+     $student->mobile=$req->mobile;
+     $student->dob=$req->dob;
+     $student->exam=$req->exam;
+     $student->password=$req->password;
+     $student->status=1;
+
+ if($student->save())
+ {
+
+   $massage='Student Records added';
+   $this->sweet_alert_success($massage);
+     return redirect()->back();
+
+ }
+    
+  }
+
+
+  public function edit_manage_student($id,Request $req)
+  {
+    $student=ems_student::where('id',$id)->first();
+    $student->name=$req->name;
+    $student->email=$req->email;
+    $student->mobile=$req->mobile;
+    $student->dob=$req->dob;
+    $student->exam=$req->exam;
+    $student->password=$req->password;
+    $student->status=$req->status;
+
+    if($student->save())
+ {
+
+   $massage='Student Records updated';
+   $this->sweet_alert_success($massage);
+     return redirect()->back();
+
+ }
+
+  }
+
+
+  public function delete_student($id)
+  {
+    $student=ems_student::where('id',$id)->first();
+    if($student->delete())
+    {
+     $massage='Record deleted';
+       $this->sweet_alert_success($massage);
+       return redirect()->back();
+     }
+    
+  }
+
+
+
+  public function manage_portal()
+  {
+    
+    $data=DB::table('ems_portals')->get();
+   return view('admin.manage_portal' ,["datas"=>$data]);
+
+  }
+
+  public function add_manage_portal(request $req)
+  {
+
+
+    $req->input();
+    $portal=new ems_portal;
+     $portal->name=$req->name;
+     $portal->email=$req->email;
+     $portal->mobile=$req->mobile;
+     $portal->password=$req->password;
+     $portal->status=1;
+
+ if($portal->save())
+ {
+
+   $massage='Portal Records added';
+   $this->sweet_alert_success($massage);
+     return redirect()->back();
+
+ }
+    
+  }
+
+
+
+  public function edit_manage_portal($id,Request $req)
+  {
+    $portal=ems_portal::where('id',$id)->first();
+    $portal->name=$req->name;
+    $portal->email=$req->email;
+    $portal->mobile=$req->mobile;
+    
+    $portal->password=$req->password;
+    $portal->status=$req->status;
+
+    if($portal->save())
+ {
+
+   $massage='portal Records updated';
+   $this->sweet_alert_success($massage);
+     return redirect()->back();
+
+ }
+
+  }
+
+  
+
+  public function delete_portal($id)
+  {
+    $portal=ems_portal::where('id',$id)->first();
+    if($portal->delete())
+    {
+     $massage='Record deleted';
+       $this->sweet_alert_success($massage);
+       return redirect()->back();
+     }
+    
+  }
 }

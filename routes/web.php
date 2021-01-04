@@ -38,4 +38,14 @@ Route::post('/admin/edit_exam/{id}', [Admin::class, 'edit_exam']);
 
 
 Route::get('/admin/manage_student', [Admin::class, 'manage_student']);
+Route::post('/admin/add_manage_student', [Admin::class, 'add_manage_student']);
+Route::post('/admin/edit_manage_student/{id}', [Admin::class, 'edit_manage_student']);
+Route::delete('/admin/delete_student/{id}', [Admin::class, 'delete_student']);
+
+
+Route::get('/admin/manage_portal', [Admin::class, 'manage_portal']);
+Route::post('/admin/add_manage_portal', [Admin::class, 'add_manage_portal']);
+Route::post('/admin/edit_manage_portal/{id}', [Admin::class, 'edit_manage_portal']);
+Route::delete('/admin/delete_portal/{id}', [Admin::class, 'delete_portal']);
+
 

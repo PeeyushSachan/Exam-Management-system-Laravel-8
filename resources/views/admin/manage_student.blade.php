@@ -24,12 +24,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Category</h1>
+            <h1 class="m-0 text-dark">Student</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="/admin">Home</a></li>
-              <li class="breadcrumb-item active">Category</li>
+              <li class="breadcrumb-item active">Student</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -65,7 +65,7 @@
                       <th>name</th>
                       <th>email</th>
                       <th>mobile</th>
-                      <th>Categories</th>
+                      <th>DOB</th>
                       <th>exam</th>
                       <th>Status</th>
                       <th>Action</th>
@@ -79,7 +79,7 @@
                       <td>{{$data->name}}</td>
                       <td>{{$data->email}}</td>
                       <td>{{$data->mobile}}</td>
-                      <td>{{$data->category}}</td>
+                      <td>{{$data->dob}}</td>
                       <td>{{$data->exam}}</td>
 
 
@@ -94,9 +94,9 @@
                       <td>
                         
                         <div class="btn-group">
-                          <button type="button" class="btn btn-warning"  onclick="edit_Rec( name='{{$data->name}}',status='{{$data->status}}',id='{{$data->id}}')"   data-toggle="modal" data-target="#modal-Edit"  name="edit-btn" title="edit btn" >
+                          <button type="button" class="btn btn-warning"  onclick="edit_Rec({{json_encode($data)}})"   data-toggle="modal" data-target="#modal-Edit"  name="edit-btn" title="edit btn" >
                             <img src="/assets/svg/edit-btn.svg"  class="img-fluid"/></button>
-                                 <form  action="../admin/delete_category/{{$data->id}}" method="post"  onsubmit="return del_Rec()">
+                                 <form  action="/admin/delete_student/{{$data->id}}" method="post"  onsubmit="return del_Rec()">
                                   {{ method_field('delete') }}
                                   @csrf
                                   <button type="submit" class="btn btn-danger"    title="delete btn">
@@ -127,7 +127,7 @@
                         <th>name</th>
                         <th>email</th>
                         <th>mobile</th>
-                        <th>Categories</th>
+                        <th>DOB</th>
                         <th>exam</th>
                         <th>Status</th>
                         <th>Action</th>
@@ -163,7 +163,7 @@
 
 
             <div class="modal-body">
-              <form  action="/admin/add_manage_exam" method="post" >
+              <form  action="/admin/add_manage_student" method="post" >
                @csrf
 
                <div class="form-group">
@@ -207,12 +207,12 @@
 
  <div class="form-group">
     <div class="col-auto">    
-<label >Select Category</label>
-<select class="form-control"  name="category" required>
+<label >Exam</label>
+<select class="form-control"  name="exam" required>
 <option disabled selected value> -- select an option -- </option>
-
-<option value="jbj n "></option> 
-<option value="jbj n "></option>
+@foreach($manage_exam_datas as $manage_exam_data)
+<option value="{{$manage_exam_data['id']}}">{{$manage_exam_data['tittle']}}</option> 
+@endforeach
 </select>  
 </div>
 
@@ -221,12 +221,12 @@
 
             <div class="form-group">
              <div class="col-auto">    
-            <label >Exam</label>
+            <label >DOB</label>
             <div class="input-group mb-2">
             <div class="input-group-prepend">
             <div class="input-group-text"><i class="fa fa-calendar" aria-hidden="true"></i></div>
             </div>      
-           <input type="text" class="form-control"   placeholder="Enter Exam date Name"  name="Exam"   maxlength="20" required>
+           <input type="date" class="form-control"   placeholder="Enter DOB"  name="dob"   maxlength="20" required>
              </div>
            </div>
              </div>
@@ -238,7 +238,7 @@
                <div class="input-group-prepend">
                <div class="input-group-text"><i class="fa fa-lock" aria-hidden="true"></i></div>
                </div>      
-              <input type="password" class="form-control"   placeholder="Enter Exam date Name"  name="Exam"   maxlength="20" required>
+              <input type="password" class="form-control"   placeholder="Enter Exam date Name"  name="password"   maxlength="20" required>
                 </div>
               </div>
                 </div>
@@ -246,6 +246,143 @@
                
 
            
+
+
+
+
+            </div>
+
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-success">Save changes</button>
+            </div>
+          </form>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+
+
+
+<!---- edit model------------------------------------------>
+
+
+      <div class="modal fade" id="modal-Edit">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+             
+              
+              <h4 class="modal-title">Add New record</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+
+
+            <div class="modal-body">
+              <form  action="" id="edit_action" method="post" >
+               @csrf
+
+               <div class="form-group">
+                <div class="col-auto">    
+           <label >Name</label>
+            <div class="input-group mb-2">
+               <div class="input-group-prepend">
+                 <div class="input-group-text"><i class="fas fa-user"></i></div>
+               </div>      
+       <input type="text" class="form-control"   placeholder="Enter  Name"  name="name" id="edit_name"  required>
+          
+         </div>
+       </div> 
+         </div>
+
+         <div class="form-group">
+            <div class="col-auto">    
+       <label >email</label>
+        <div class="input-group mb-2">
+           <div class="input-group-prepend">
+             <div class="input-group-text"><i class="fa fa-envelope"></i></div>
+           </div>      
+   <input type="email" class="form-control"   placeholder="Enter email"  name="email"  id="edit_email" required>
+      
+     </div>
+   </div> 
+     </div>
+
+     <div class="form-group">
+        <div class="col-auto">    
+   <label >Mobile</label>
+    <div class="input-group mb-2">
+       <div class="input-group-prepend">
+         <div class="input-group-text"><i class="fa fa-mobile"></i></div>
+       </div>      
+<input type="text" class="form-control"   placeholder="Enter  mobile"  name="mobile" id="edit_mobile"  required>
+  
+ </div>
+</div> 
+ </div>
+
+ <div class="form-group">
+    <div class="col-auto">    
+<label >Exam</label>
+<select class="form-control"  name="exam" id="edit_exam" required>
+<option disabled selected value> -- select an option -- </option>
+@foreach($manage_exam_datas as $manage_exam_data)
+<option value="{{$manage_exam_data['id']}}">{{$manage_exam_data['tittle']}}</option> 
+@endforeach
+</select>  
+</div>
+
+</div>
+
+
+            <div class="form-group">
+             <div class="col-auto">    
+            <label >DOB</label>
+            <div class="input-group mb-2">
+            <div class="input-group-prepend">
+            <div class="input-group-text"><i class="fa fa-calendar" aria-hidden="true"></i></div>
+            </div>      
+           <input type="date" class="form-control"   placeholder="Enter DOB"  name="dob"  id="edit_dob"  maxlength="20" required>
+             </div>
+           </div>
+             </div>
+
+             <div class="form-group">
+                <div class="col-auto">    
+               <label >password</label>
+               <div class="input-group mb-2">
+               <div class="input-group-prepend">
+               <div class="input-group-text"><i class="fa fa-lock" aria-hidden="true"></i></div>
+               </div>      
+              <input type="password" class="form-control"   placeholder="Enter Exam date Name"  name="password"   maxlength="20" id="edit_pass" required>
+                </div>
+              </div>
+                </div>
+
+
+
+                <div class="form-group">
+                  <div class="col-auto">    
+             <label >status</label>
+                  <br/>
+            <input type="radio"  name="status"  value="1"  id="v1_t" required>      
+             <label>Active</label>
+        
+              <br/>
+      
+        
+         <input type="radio"   name="status" id="v2_f" value="0" >
+         <label>Inactive</label> 
+           
+         </div>
+            
+           </div>
+
+
+
 
 
 
@@ -282,6 +419,39 @@
   <!-- /.content-wrapper -->
   
 <script>
+
+
+function edit_Rec(data)
+{
+
+  
+  document.getElementById("edit_name").value=data['name'];
+  document.getElementById("edit_email").value=data['email'];
+  document.getElementById("edit_mobile").value=data['mobile'];
+  document.getElementById("edit_exam").value=data['exam'];
+
+  document.getElementById("edit_dob").value=data['dob'];
+  document.getElementById("edit_pass").value=data['password'];
+  
+  document.getElementById("edit_action").action= "/admin/edit_manage_student/"+data['id'];
+ 
+  
+ 
+if(data['status']==1)
+{
+ console.log("true");
+document.getElementById("v1_t").checked=true;
+
+
+}
+else
+{
+  console.log("false");
+  document.getElementById("v2_f").checked=true;
+}
+                   
+
+}
 
 
 
