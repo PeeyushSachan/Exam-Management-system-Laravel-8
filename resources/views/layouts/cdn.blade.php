@@ -36,6 +36,7 @@
 
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
+  @include('sweet::alert')
 <div class="wrapper">
 
  
