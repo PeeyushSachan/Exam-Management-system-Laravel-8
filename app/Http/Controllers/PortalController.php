@@ -1,17 +1,14 @@
 <?php
 namespace App\Http\Controllers;
 use App\Models\ems_portal;
-
+use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 
 class PortalController extends Controller
 {
 
 
-    public function portal()
-    {
-        return view('portal.portal');
-    }
+ 
 
     public function sweet_alert($massage,$type)
     {
@@ -26,12 +23,12 @@ class PortalController extends Controller
         return view('portal.signup');
     }
  
-   public function signup_create( Request $req)
+   public function signup_create(Request $req)
    {
-   $cheak=ems_portal::
-   where('email',$req->email)->get();
+   $check=ems_portal::where('email',$req->email)->get()->toarray();
 
- if($cheak)
+
+ if($check)
  {
     $massage='Email already Exist';
     $type="warning";
@@ -43,7 +40,7 @@ class PortalController extends Controller
     $portal=new ems_portal;
      $portal->name=$req->name;
      $portal->email=$req->email;
-    return $portal->mobile=$req->mobile;
+     $portal->mobile=$req->mobile;
      $portal->password=$req->password;
      $portal->status=1;
 
@@ -65,6 +62,46 @@ class PortalController extends Controller
         return view('portal.login');
     }
 
+    public function login_access(Request $req)
+    {
+        $check=ems_portal::where('email',$req->email)->where('password',$req->password)->first();
+       
+
+       
+        if($check)
+        {
+            if($check['status']==1)
+       {
+          
+     $req->session()->put('user',$check);
+
+   
+            $massage='login Success';
+            $type="success";
+            $this->sweet_alert($massage,$type);
+
+              return view('portal/portal_dashboard');
+        }
+
+        
+    else{
+
+        $massage='Your Account is Blocked';
+        $type="warning";
+        $this->sweet_alert($massage,$type);
+          return redirect()->back();
+
+    }
+    }
+        else
+        {
+            $massage='Email Or Password Incorrect';
+            $type="warning";
+            $this->sweet_alert($massage,$type);
+              return redirect()->back();
+        }
+    
+}
 }
 
 

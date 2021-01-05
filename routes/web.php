@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\PortalController;
+use App\Http\Controllers\portaloperation;
 use App\Http\Controllers\HomeController;
 
 /*
@@ -50,11 +51,14 @@ Route::post('/admin/edit_manage_portal/{id}', [Admin::class, 'edit_manage_portal
 Route::delete('/admin/delete_portal/{id}', [Admin::class, 'delete_portal']);
 
 //PORTAL -----CONTROLLER----------START
-Route::get('portal', [PortalController::class, 'portal']);
+//
 
 Route::get('portal/signup', [PortalController::class, 'portal_signup']);
 Route::get('portal/login', [PortalController::class, 'portal_login']);
+Route::post('portal/login_access', [PortalController::class, 'login_access']);
 Route::post('portal/signup_create', [PortalController::class, 'signup_create']);
 
+
+Route::get('portal/portal_dashboard', [portaloperation::class, 'portal_dashboard']);
 
 
