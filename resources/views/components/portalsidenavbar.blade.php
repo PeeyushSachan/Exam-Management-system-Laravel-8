@@ -13,7 +13,7 @@
           <img src="/assets/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">lhkujg</a>
+          <a href="#" class="d-block">{{session()->get('puser')['name']}}</a>
         </div>
       </div>
  
@@ -23,7 +23,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                <li class="nav-item">
-                <a href="/admin" class="nav-link">
+                <a href="/portal/portal_dashboard" class="nav-link">
                   <i class="nav-icon fas fa-tachometer-alt"></i>
                   <p>
                     Dashboard
@@ -32,15 +32,7 @@
                 </a>
               </li>
 
-              <li class="nav-item">
-                <a href="/admin/exam_category" class="nav-link">
-                  <i class="nav-icon fas fa-th"></i>
-                  <p>
-                    Category
-                   
-                  </p>
-                </a>
-              </li>
+              
 
 <!--
           <li class="nav-item has-treeview menu-open">
@@ -74,35 +66,10 @@
           </li>
         -->
 
-          <li class="nav-item">
-            <a href="/admin/manage_exam" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
-              <p>
-                Exam
-                
-              </p>
-            </a>
-          </li>
+         
 
-          <li class="nav-item">
-            <a href="/admin/manage_student" class="nav-link">
-              <i class="nav-icon fas fa-user"></i>
-              <p>
-                Student
-                
-              </p>
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a href="/admin/manage_portal" class="nav-link">
-              <i class="nav-icon fas fa-user"></i>
-              <p>
-                Portal
-                
-              </p>
-            </a>
-          </li>
+          
+          
 
 
         </ul>

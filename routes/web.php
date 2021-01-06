@@ -18,14 +18,15 @@ use App\Http\Controllers\HomeController;
 |
 */
 
+
 Route::get('/', function () {
     return view('welcome');
 });
 
+
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
-
 Route::get('/admin', [Admin::class, 'index']);
 //category----curd
 Route::get('/admin/exam_category', [Admin::class, 'exam_category']);
@@ -60,5 +61,6 @@ Route::post('portal/signup_create', [PortalController::class, 'signup_create']);
 
 
 Route::get('portal/portal_dashboard', [portaloperation::class, 'portal_dashboard']);
+Route::get('portal/exam_form/{id}', [portaloperation::class, 'exam_form']);
 
 

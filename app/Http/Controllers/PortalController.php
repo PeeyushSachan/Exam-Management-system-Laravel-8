@@ -57,13 +57,22 @@ class PortalController extends Controller
     }
 
 
-    public function portal_login()
+    public function portal_login(Request $req)
     {
+
+      if($req->session()->has('puser'))
+      {
+         return redirect('/portal/portal_dashboard');
+      }
+      
         return view('portal.login');
     }
 
     public function login_access(Request $req)
     {
+
+
+
         $check=ems_portal::where('email',$req->email)->where('password',$req->password)->first();
        
 
@@ -73,14 +82,14 @@ class PortalController extends Controller
             if($check['status']==1)
        {
           
-     $req->session()->put('user',$check);
+     $req->session()->put('puser',$check);
 
    
             $massage='login Success';
             $type="success";
             $this->sweet_alert($massage,$type);
 
-              return view('portal/portal_dashboard');
+              return view('portal/portal');
         }
 
         

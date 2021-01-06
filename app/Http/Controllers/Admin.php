@@ -315,7 +315,7 @@ class Admin extends Controller
     $portal=ems_portal::where('id',$id)->first();
     if($portal->delete())
     {
-     $massage='Record deleted';
+      $massage='Record deleted';
        $this->sweet_alert_success($massage);
        return redirect()->back();
      }
