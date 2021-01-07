@@ -1,12 +1,12 @@
 <?php
+
 namespace App\Http\Controllers;
-use App\Models\ems_portal;
-use Illuminate\Support\Facades\Session;
+use App\Models\ems_student;
 use Illuminate\Http\Request;
 
-class PortalController extends Controller
+class stucontroller extends Controller
 {
-
+  
     public function sweet_alert($massage,$type)
     {
 
@@ -15,14 +15,14 @@ class PortalController extends Controller
        
        
     }
-    public function portal_signup()
+    public function student_signup()
     {
-        return view('portal.signup');
+        return view('student.signup');
     }
  
    public function signup_create(Request $req)
    {
-   $check=ems_portal::where('email',$req->email)->get()->toarray();
+   $check=ems_student::where('email',$req->email)->get()->toarray();
 
 
  if($check)
@@ -34,18 +34,18 @@ class PortalController extends Controller
  }
  else
  {
-    $portal=new ems_portal;
-     $portal->name=$req->name;
-     $portal->email=$req->email;
-     $portal->mobile=$req->mobile;
-     $portal->password=$req->password;
-     $portal->status=1;
+    $student=new ems_student;
+     $student->name=$req->name;
+     $student->email=$req->email;
+     $student->mobile=$req->mobile;
+     $student->password=$req->password;
+     $student->status=1;
 
 
- if($portal->save())
+ if($student->save())
  {
 
-   $massage='Portal Records added';
+   $massage='student Records added';
    $type="success";
    $this->sweet_alert($massage,$type);
      return redirect()->back();
@@ -54,15 +54,15 @@ class PortalController extends Controller
     }
 
 
-    public function portal_login(Request $req)
+    public function student_login(Request $req)
     {
 
-      if($req->session()->has('puser'))
+      if($req->session()->has('suser'))
       {
-         return redirect('/portal/portal_dashboard');
+         return redirect('/student/student_dashboard');
       }
       
-        return view('portal.login');
+        return view('student.login');
     }
 
     public function login_access(Request $req)
@@ -70,7 +70,7 @@ class PortalController extends Controller
 
 
 
-        $check=ems_portal::where('email',$req->email)->where('password',$req->password)->first();
+        $check=ems_student::where('email',$req->email)->where('password',$req->password)->first();
        
 
        
@@ -79,14 +79,14 @@ class PortalController extends Controller
             if($check['status']==1)
        {
           
-     $req->session()->put('puser',$check);
+     $req->session()->put('suser',$check);
 
    
             $massage='login Success';
             $type="success";
             $this->sweet_alert($massage,$type);
 
-              return redirect('portal/portal_dashboard');
+              return redirect('student/student_dashboard');
         }
 
         
@@ -109,6 +109,3 @@ class PortalController extends Controller
     
 }
 }
-
-
-

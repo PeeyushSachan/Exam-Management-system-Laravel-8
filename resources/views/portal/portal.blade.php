@@ -60,7 +60,7 @@
               </div>
               @if(strtotime(date('y-m-d'))<strtotime($master_data->exam_date))
              
-              <a href="/portal/exam_form/{{$master_data->id}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="/portal/exam_form/{{$master_data->id}}" class="small-box-footer" data-toggle="modal" data-target="#modal-default">More info <i class="fas fa-arrow-circle-right"></i></a>
               @else
               <p class="small-box-footer">Exam Completed</p>
               @endif
@@ -80,5 +80,66 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+
+
+  <div class="modal fade" id="modal-default">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+         
+          
+          <h4 class="modal-title">Add New record</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form  action="../admin/add_category" method="post" class="db_operation">
+              @csrf
+            <div class="form-group">
+              <div class="col-auto">    
+         <label >Category Name</label>
+          <div class="input-group mb-2">
+             <div class="input-group-prepend">
+               <div class="input-group-text"><i class="fas fa-list-alt"></i></div>
+             </div>      
+         
+     <input type="text" class="form-control"   placeholder="Enter Category Name"  name="category_name"   maxlength="20" required>
+        
+       </div>
+     </div>
+        
+       </div>
+
+       <div class="form-group">
+        <div class="col-auto">    
+   <label >status</label>
+        <br/>
+  <input type="radio"  name="status_name"  value="1" required>      
+   <label>Active</label>
+
+    <br/>
+
+
+<input type="radio"   name="status_name"  value="0" >
+<label>Inactive</label> 
+ 
+</div>
+  
+ </div>
+
+
+        </div>
+
+        <div class="modal-footer justify-content-between">
+          <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-success">Save changes</button>
+        </div>
+      </form>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
   
   @endsection

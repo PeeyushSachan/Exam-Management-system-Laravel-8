@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin;
+use App\Http\Controllers\stucontroller;
 use App\Http\Controllers\PortalController;
 use App\Http\Controllers\portaloperation;
 use App\Http\Controllers\HomeController;
@@ -64,3 +65,14 @@ Route::get('portal/portal_dashboard', [portaloperation::class, 'portal_dashboard
 Route::get('portal/exam_form/{id}', [portaloperation::class, 'exam_form']);
 
 
+//portal_manage_student----curd
+Route::get('/portal/manage_student', [portaloperation::class, 'manage_student']);
+Route::post('/portal/add_manage_student', [portaloperation::class, 'add_manage_student']);
+Route::post('/portal/edit_manage_student/{id}', [portaloperation::class, 'edit_manage_student']);
+
+
+//student----------------student
+Route::get('student/signup', [stucontroller::class, 'student_signup']);
+Route::get('student/login', [stucontroller::class, 'student_login']);
+Route::post('student/login_access', [stucontroller::class, 'login_access']);
+Route::post('student/signup_create', [stucontroller::class, 'signup_create']);
